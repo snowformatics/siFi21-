@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="Images">
+    <file>Images/siFi21_icon64.tif</file>
+    <file>Images/about.tif</file>
+    <file>Images/siFi21_logo_transpBG_100.tif</file>
+    <file>Images/open.png</file>
+    <file>Images/add.png</file>
+    <file>Images/header01.png</file>
+    <file>Images/header01_50.png</file>
+    <file>Images/header01_cut.png</file>
+    <file>Images/header02.png</file>
+    <file>Images/remove.png</file>
+    <file>Images/siFi21_logo_transpBG.tif</file>
+    <file>Images/siFi21_logo_witheBG.tif</file>
+  </qresource>
+</RCC>
