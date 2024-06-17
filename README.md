@@ -16,7 +16,8 @@ Here, we report on a software called siFi for optimizing long double-stranded RN
 
 Attribution-NonCommercial-ShareAlike 2.0 Generic (CC BY-NC-SA 2.0) License
 
-### We have received many requests to save the siRNA sequences, and we understand the importance of this feature:
+
+# We have received many requests to save the siRNA sequences, and we understand the importance of this feature
 Unfortunately, this function has not been implemented, and si-Fi is currently not updated due to the need for a complete rewrite to meet current Python standards and library versions. 
 
 However, there is a workaround, though it requires a bit of effort. You will need to locate the system's temporary directory, which on Windows is typically:
