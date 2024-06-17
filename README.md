@@ -15,3 +15,21 @@ RNA interference (RNAi) is a nucleic acid complementarity-based biological pheno
 Here, we report on a software called siFi for optimizing long double-stranded RNAi- target design and for prediction of RNAi off-targets. It is open source desktop software that provides an intuitive graphical user interface, works in Microsoft Windows environment and can use custom sequence databases in  standard FASTA format. 
 
 Attribution-NonCommercial-ShareAlike 2.0 Generic (CC BY-NC-SA 2.0) License
+
+### We have received many requests to save the siRNA sequences, and we understand the importance of this feature:
+Unfortunately, this function has not been implemented, and si-Fi is currently not updated due to the need for a complete rewrite to meet current Python standards and library versions. 
+
+However, there is a workaround, though it requires a bit of effort. You will need to locate the system's temporary directory, which on Windows is typically:
+
+C:\Users\YOUR_NAME_HERE\AppData\Local\Temp
+
+After running si-Fi, you will find a temporary file with a .json extension, such as tmppaivxu.json.
+
+To locate this file:
+
+- Check the time of the run.
+- Sort the files in the temporary directory by the latest creation time.
+  
+This file contains all the siRNAs along with the relevant information in JSON format. There are numerous JSON parsers available online that can help you convert this data into a table-like format.
+
+We apologize for the inconvenience, but currently, this is the only method available to extract the siRNA sequences.
