@@ -4,6 +4,7 @@ import os
 import logging
 import platform
 from types import *
+from pathlib import Path
 
 
 def all_dbs(db_location):
@@ -41,10 +42,10 @@ def create_bowtie_database(db_name, database_file_location, db_location, bowtie_
     assert type(bowtie_location) is str
 
     os.chdir(bowtie_location)
-    process = subprocess.Popen(["bowtie-build", database_file_location, db_location + str(db_name)])
+    process = subprocess.Popen(["bowtie-build", database_file_location, str(Path(db_location) / db_name)])
     process.wait()
 
-    if os.path.exists(db_location + str(db_name) + ".rev.1.ebwt"):
+    if (Path(db_location) / f"{db_name}.ref.1.ebwt").exists():
         return "Database successfully created!", True
     else:
         logging.debug(time.strftime("%d.%m.%Y um %H:%M:%S Uhr"))
