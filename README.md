@@ -15,7 +15,18 @@ RNA interference (RNAi) is a nucleic acid complementarity-based biological pheno
 Here, we report on a software called siFi for optimizing long double-stranded RNAi- target design and for prediction of RNAi off-targets. It is open source desktop software that provides an intuitive graphical user interface, works in Microsoft Windows environment and can use custom sequence databases in  standard FASTA format. 
 
 Attribution-NonCommercial-ShareAlike 2.0 Generic (CC BY-NC-SA 2.0) License
+# Installation and requirements
+### requirements
+- Anaconda
+- bowtie
+- FASTA file to check against (Ensembl cDNA)
 
+### Installation
+```
+conda create --name sifi python=3.9
+conda activate sifi
+conda install --yes --file requirements.txt
+```
 
 # We have received many requests to save the siRNA sequences, and we understand the importance of this feature
 Unfortunately, this function has not been implemented, and si-Fi is currently not updated due to the need for a complete rewrite to meet current Python standards and library versions. 
