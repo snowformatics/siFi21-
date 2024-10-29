@@ -20,6 +20,7 @@ Attribution-NonCommercial-ShareAlike 2.0 Generic (CC BY-NC-SA 2.0) License
 - Anaconda
 - bowtie
 - FASTA file to check against (Ensembl cDNA for example)
+- QT5
 
 ### Installation
 ```
