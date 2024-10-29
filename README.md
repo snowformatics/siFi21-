@@ -27,6 +27,7 @@ Attribution-NonCommercial-ShareAlike 2.0 Generic (CC BY-NC-SA 2.0) License
 conda create --name sifi python=3.9
 conda activate sifi
 conda install --yes --file requirements.txt
+mkdir ~/sifi
 ```
 
 ### Running
