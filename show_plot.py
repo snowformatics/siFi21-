@@ -1,10 +1,10 @@
-from PyQt4 import QtCore, QtGui
-from matplotlib.backends.backend_qt4agg \
+from PyQt5 import QtCore, QtWidgets
+from matplotlib.backends.backend_qt5agg \
     import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg \
+from matplotlib.backends.backend_qt5agg \
     import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_qt4agg \
+from matplotlib.backends.backend_qt5agg \
     import NavigationToolbar2QT
 from matplotlib.patches import Rectangle
 import matplotlib.lines as mlines
@@ -23,7 +23,7 @@ class NavigationToolbar(NavigationToolbar2QT):
     toolitems = [t for t in NavigationToolbar2QT.toolitems if t[0] in ('Home', 'Zoom', 'Save')]
 
 
-class DrawPlot(QtGui.QMainWindow):
+class DrawPlot(QtWidgets.QMainWindow):
     def __init__(self, sirna_size, query_sequence, sifi_data, off_target_pos_list, region_plot_lst, temp_location,
                  scoret_lst, main_targets, f_in, mode, table_data, parent = None):
         """Class for drawing the plots inside a window."""
@@ -44,7 +44,7 @@ class DrawPlot(QtGui.QMainWindow):
         self.main_targets = main_targets
         self.f_in = f_in
         self.mode = mode
-        self.home_location = str(QtGui.QDesktopServices.storageLocation(QtGui.QDesktopServices.HomeLocation))
+        self.home_location = str(QtWidgets.QDesktopServices.storageLocation(QtWidgets.QDesktopServices.HomeLocation))
         self.table_data = table_data
 
         if self.mode == 0:
@@ -55,7 +55,7 @@ class DrawPlot(QtGui.QMainWindow):
         # Image tempfile
         self.temp_img_file = tempfile.mkstemp()
 
-        self.printer = QtGui.QPrinter()
+        self.printer = QtWidgets.QPrinter()
         # Single query mode, get all data
         query = list(general_helpers.iterparse(self.sifi_data))[0]
         # Get number of hits per query
@@ -85,10 +85,10 @@ class DrawPlot(QtGui.QMainWindow):
         self.toolbar = NavigationToolbar(self.canvas, self)
         self.addToolBar(self.toolbar)
 
-        self.main_widget = QtGui.QWidget(self)
+        self.main_widget = QtWidgets.QWidget(self)
         self.setCentralWidget(self.main_widget)
 
-        layout = QtGui.QVBoxLayout()
+        layout = QtWidgets.QVBoxLayout()
         layout.addWidget(self.canvas)
 
         self.createActions()
@@ -280,19 +280,19 @@ class DrawPlot(QtGui.QMainWindow):
         fileName = self.temp_img_file[1] + '.png'
 
         if fileName:
-            image = QtGui.QImage(fileName)
+            image = QtWidgets.QImage(fileName)
 
-        self.imageLabel = QtGui.QLabel()
-        self.imageLabel.setBackgroundRole(QtGui.QPalette.Base)
-        self.imageLabel.setSizePolicy(QtGui.QSizePolicy.Ignored,
-                QtGui.QSizePolicy.Ignored)
+        self.imageLabel = QtWidgets.QLabel()
+        self.imageLabel.setBackgroundRole(QtWidgets.QPalette.Base)
+        self.imageLabel.setSizePolicy(QtWidgets.QSizePolicy.Ignored,
+                QtWidgets.QSizePolicy.Ignored)
         self.imageLabel.setScaledContents(True)
         self.imageLabel.setPixmap(QtGui.QPixmap.fromImage(image))
         self.scaleFactor = 1.0
 
-        dialog = QtGui.QPrintDialog(self.printer, self)
+        dialog = QtWidgets.QPrintDialog(self.printer, self)
         if dialog.exec_():
-            painter = QtGui.QPainter(self.printer)
+            painter = QtWidgets.QPainter(self.printer)
             rect = painter.viewport()
             size = self.imageLabel.pixmap().size()
             size.scale(rect.size(), QtCore.Qt.KeepAspectRatio)
@@ -302,7 +302,7 @@ class DrawPlot(QtGui.QMainWindow):
 
     def export_image(self):
         """Export the images as png."""
-        filename = QtGui.QFileDialog.getSaveFileName(self, 'Save File', self.home_location, '*.png')
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File', self.home_location, '*.png')
         if filename:
             if not str(filename).endswith('.png'):
                 filename += filename + '.png'
@@ -314,7 +314,7 @@ class DrawPlot(QtGui.QMainWindow):
             self.show_info_message(message)
 
     def export_table(self):
-        filename = QtGui.QFileDialog.getSaveFileName(self, 'Export table', self.home_location, '*.csv')
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, 'Export table', self.home_location, '*.csv')
         if filename:
             if not str(filename).endswith('.csv'):
                 filename += filename + '.csv'
@@ -335,26 +335,26 @@ class DrawPlot(QtGui.QMainWindow):
 
     def show_info_message(self, message):
         """Pop up an info message."""
-        QtGui.QMessageBox.information(self,
+        QtWidgets.QMessageBox.information(self,
                                       u"Information",
                                       message)
 
 
     def createActions(self):
-        self.printAct = QtGui.QAction("&Print...", self, enabled=True, triggered=self.print_)
-        self.exitAct = QtGui.QAction("E&xit", self, triggered=self.close)
+        self.printAct = QtWidgets.QAction("&Print...", self, enabled=True, triggered=self.print_)
+        self.exitAct = QtWidgets.QAction("E&xit", self, triggered=self.close)
 
-        self.imgAct = QtGui.QAction("Image file", self, triggered=self.export_image)
-        self.tableAct = QtGui.QAction("Table (CSV)", self, triggered=self.export_table)
+        self.imgAct = QtWidgets.QAction("Image file", self, triggered=self.export_image)
+        self.tableAct = QtWidgets.QAction("Table (CSV)", self, triggered=self.export_table)
 
     def createMenus(self):
-        self.fileMenu = QtGui.QMenu("&File", self)
+        self.fileMenu = QtWidgets.QMenu("&File", self)
         self.fileMenu.addAction(self.printAct)
         self.fileMenu.addSeparator()
         self.fileMenu.addAction(self.exitAct)
 
         # Export menu
-        self.exportMenu = QtGui.QMenu("&Save as", self)
+        self.exportMenu = QtWidgets.QMenu("&Save as", self)
         self.exportMenu.addAction(self.imgAct)
 
         self.exportMenu.addAction(self.tableAct)

@@ -12,10 +12,10 @@ from collections import Counter
 
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-from Bio.Alphabet import generic_dna
 from Bio.SeqFeature import FeatureLocation
 from Bio import SeqIO
 from Bio.SeqFeature import SeqFeature
+from pathlib import Path
 
 
 def start_logging(method, log_file):
@@ -40,15 +40,16 @@ def create_folders(folder_lst, file_lst):
 
 def copying_files(app_location):
     """Copy important files for si-Fi into the application data location."""
-    to_copy_folders = os.listdir(os.getcwd() + '/ToCopy/')
-    shutil.copyfile(os.getcwd() + '/ToCopy/Images/about.tif', app_location + '/Images/about.tif')
+    to_copy_folders = (Path.cwd() / 'ToCopy').iterdir()
+    shutil.copyfile(Path.cwd() / 'ToCopy/Images/about.tif', app_location / 'Images/about.tif')
     for folder in to_copy_folders:
-        to_copy_files = os.listdir(os.getcwd() + '/ToCopy/' + folder)
+        to_copy_files = (Path.cwd() / 'ToCopy' / folder).iterdir()
         for files in to_copy_files:
-            if not folder.startswith('.'):
-                if not files.startswith('.'):
-                    if not os.path.exists(app_location + '/' + folder + '/' + files):
-                        shutil.copyfile(os.getcwd() + '/ToCopy/' + folder + '/' + files, app_location + '/' + folder + '/' + files)
+            if not str(folder).startswith('.'):
+                if not str(files).startswith('.'):
+                    if not (app_location / folder / files).exists():
+                    # if not os.path.exists(app_location + '/' + folder + '/' + files):
+                        shutil.copyfile(Path.cwd() / 'ToCopy' / folder / files, app_location / folder / files)
 
 def validate_seq(sequence):
     """Validate plain text DNA sequence without header."""
@@ -159,7 +160,7 @@ def get_target_data(f_in, sirna_size):
 
 def group_ranges(data):
     ranges = []
-    for k, g in groupby(enumerate(data), lambda (i,x):i-x):
+    for k, g in groupby(enumerate(data), lambda i,x:i-x):
         group = map(itemgetter(1), g)
         ranges.append((group[0], group[-1]))
     return ranges
@@ -172,7 +173,6 @@ def create_gbk(main_target_dict, off_target_dict, seq_file, out_file):
     data = SeqIO.read(open(seq_file + '.fasta'), "fasta")
     my_sequence = Seq(str(data.seq))
     my_sequence_record = SeqRecord(my_sequence)
-    my_sequence_record.seq.alphabet = generic_dna
 
     for target, positions in main_target_dict.iteritems():
         group = group_ranges(positions)

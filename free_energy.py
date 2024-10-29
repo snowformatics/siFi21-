@@ -281,7 +281,7 @@ def calculate_free_energy(seq, check=True, strict=True, c_seq=None, shift=0, nn_
           dNTPs=0, saltcorr=5):
     """Return the delatG using nearest neighbor thermodynamics."""
     #print shift
-    print seq
+    print(seq)
     seq = str(seq)
     if not c_seq:
         # c_seq must be provided by user if dangling ends or mismatches should

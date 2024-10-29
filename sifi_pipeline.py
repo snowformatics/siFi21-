@@ -150,7 +150,7 @@ class SifiPipeline(object):
                         sifi_data = open(temp_json_file[1] + '.json', "r").read()
                         table_data = general_helpers.get_table_data(temp_json_file[1] + '.json')
                         for x in table_data:
-                            print x[0], x[1], x[2]
+                            print(x[0], x[1], x[2])
                         plot = show_plot.DrawPlot(self.sirna_size, query_sequence, sifi_data, None, None,
                                                 self.temp_location, None, main_targets,
                                                 temp_json_file[1] + '.json', self.mode, table_data)
@@ -219,7 +219,7 @@ class SifiPipeline(object):
                 missmatches = None
 
             if strand == '+':
-                print 'ok'
+                print('ok')
                 # We need the antisense siRNA (c_seq) for the energy
                 # Antisense sequence = sequence position - 2
                 # First two siRNas are ignored

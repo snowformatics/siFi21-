@@ -1,41 +1,41 @@
 #!/usr/bin/env python
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 from PIL import Image
 import shutil
 import os
 import general_helpers
 
 
-class ImageViewer(QtGui.QMainWindow):
+class ImageViewer(QtWidgets.QMainWindow):
     # QMainWindow doesn't have a closed signal, so we'll make one.
     closed = QtCore.pyqtSignal()
 
     def __init__(self, parent, fileName, mode, table_data, main_target_dict, off_target_dict, seq_file):
-        QtGui.QMainWindow.__init__(self, parent)
+        QtWidgets.QMainWindow.__init__(self, parent)
         self.parent = parent
-        self.printer = QtGui.QPrinter()
+        self.printer = QtWidgets.QPrinter()
 
         self.scaleFactor = 0.0
         self.scale = 0.75
         offset = 50
 
         self.mode = mode
-        self.home_location = str(QtGui.QDesktopServices.storageLocation(QtGui.QDesktopServices.HomeLocation))
+        self.home_location = str(QtWidgets.QDesktopServices.storageLocation(QtWidgets.QDesktopServices.HomeLocation))
         self.image_file = fileName
         self.table_data = table_data
         self.main_target_dict = main_target_dict
         self.off_target_dict = off_target_dict
         self.seq_file = seq_file
 
-        self.imageLabel = QtGui.QLabel()
-        self.imageLabel.setBackgroundRole(QtGui.QPalette.Base)
-        self.imageLabel.setSizePolicy(QtGui.QSizePolicy.Ignored,
-                QtGui.QSizePolicy.Ignored)
+        self.imageLabel = QtWidgets.QLabel()
+        self.imageLabel.setBackgroundRole(QtWidgets.QPalette.Base)
+        self.imageLabel.setSizePolicy(QtWidgets.QSizePolicy.Ignored,
+                QtWidgets.QSizePolicy.Ignored)
         self.imageLabel.setScaledContents(True)
 
-        self.scrollArea = QtGui.QScrollArea()
-        self.scrollArea.setBackgroundRole(QtGui.QPalette.Dark)
+        self.scrollArea = QtWidgets.QScrollArea()
+        self.scrollArea.setBackgroundRole(QtWidgets.QPalette.Dark)
         self.scrollArea.setWidget(self.imageLabel)
         self.setCentralWidget(self.scrollArea)
         self.createActions()
@@ -52,9 +52,9 @@ class ImageViewer(QtGui.QMainWindow):
 
     def open(self, fileName):
         if fileName:
-            image = QtGui.QImage(fileName)
+            image = QtWidgets.QImage(fileName)
             if image.isNull():
-                QtGui.QMessageBox.information(self, "Image Viewer",
+                QtWidgets.QMessageBox.information(self, "Image Viewer",
                         "Cannot load %s." % fileName)
                 return
             self.imageLabel.setPixmap(QtGui.QPixmap.fromImage(image))
@@ -63,9 +63,9 @@ class ImageViewer(QtGui.QMainWindow):
         self.scaleImage(self.scale)
 
     def print_(self):
-        dialog = QtGui.QPrintDialog(self.printer, self)
+        dialog = QtWidgets.QPrintDialog(self.printer, self)
         if dialog.exec_():
-            painter = QtGui.QPainter(self.printer)
+            painter = QtWidgets.QPainter(self.printer)
             rect = painter.viewport()
             size = self.imageLabel.pixmap().size()
             size.scale(rect.size(), QtCore.Qt.KeepAspectRatio)
@@ -75,7 +75,7 @@ class ImageViewer(QtGui.QMainWindow):
 
     def export_gbk(self):
         """Exports to genbank file."""
-        filename = QtGui.QFileDialog.getSaveFileName(self, 'Save File', self.home_location, '*.gbk')
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File', self.home_location, '*.gbk')
         if filename:
             if not str(filename).endswith('.gbk'):
                 filename += filename + '.gbk'
@@ -88,7 +88,7 @@ class ImageViewer(QtGui.QMainWindow):
 
     def export_image(self):
         """Export the images as png."""
-        filename = QtGui.QFileDialog.getSaveFileName(self, 'Save File', self.home_location, '*.png')
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File', self.home_location, '*.png')
         if filename:
             if not str(filename).endswith('.png'):
                 filename += filename + '.png'
@@ -101,7 +101,7 @@ class ImageViewer(QtGui.QMainWindow):
 
 
     def export_table(self):
-        filename = QtGui.QFileDialog.getSaveFileName(self, 'Export table', self.home_location, '*.csv')
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, 'Export table', self.home_location, '*.csv')
         if filename:
             if not str(filename).endswith('.csv'):
                 filename += filename + '.csv'
@@ -122,28 +122,28 @@ class ImageViewer(QtGui.QMainWindow):
 
     def show_info_message(self, message):
         """Pop up an info message."""
-        QtGui.QMessageBox.information(self,
+        QtWidgets.QMessageBox.information(self,
                                       u"Information",
                                       message)
 
 
     def createActions(self):
-        self.printAct = QtGui.QAction("&Print...", self, enabled=False, triggered=self.print_)
-        self.exitAct = QtGui.QAction("E&xit", self, triggered=self.close)
+        self.printAct = QtWidgets.QAction("&Print...", self, enabled=False, triggered=self.print_)
+        self.exitAct = QtWidgets.QAction("E&xit", self, triggered=self.close)
 
-        self.gbkAct = QtGui.QAction("Genbank file", self, triggered=self.export_gbk)
-        self.imgAct = QtGui.QAction("Image file", self, triggered=self.export_image)
-        self.tableAct = QtGui.QAction("Table (CSV)", self, triggered=self.export_table)
+        self.gbkAct = QtWidgets.QAction("Genbank file", self, triggered=self.export_gbk)
+        self.imgAct = QtWidgets.QAction("Image file", self, triggered=self.export_image)
+        self.tableAct = QtWidgets.QAction("Table (CSV)", self, triggered=self.export_table)
 
     def createMenus(self):
 
-        self.fileMenu = QtGui.QMenu("&File", self)
+        self.fileMenu = QtWidgets.QMenu("&File", self)
         self.fileMenu.addAction(self.printAct)
         self.fileMenu.addSeparator()
         self.fileMenu.addAction(self.exitAct)
 
         # Export menu
-        self.exportMenu = QtGui.QMenu("&Save as", self)
+        self.exportMenu = QtWidgets.QMenu("&Save as", self)
         self.exportMenu.addAction(self.imgAct)
 
         self.exportMenu.addAction(self.tableAct)

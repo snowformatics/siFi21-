@@ -1,12 +1,12 @@
 import os
 import threads
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 from Resources.ui_db_wizard import Ui_wizard
 
 
-class DBWizard(QtGui.QWizard):
+class DBWizard(QtWidgets.QWizard):
     def __init__(self, mainWindow, data_location, app_location, home_location, db_location, bowtie_location):
-        QtGui.QWizard.__init__(self)
+        QtWidgets.QWizard.__init__(self)
 
         self.data_location = data_location
         self.app_location = app_location
@@ -37,7 +37,7 @@ class DBWizard(QtGui.QWizard):
                     self.value = 0
                     self.button(self.FinishButton).setEnabled(False)
                     self.ui_wizard.progressBar.setValue(self.value)
-                    self.setCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
+                    self.setCursor(QtWidgets.QCursor(QtCore.Qt.WaitCursor))
                     # Start Bowtie thread
                     self.ui_wizard.label_3.setText('Creating Bowtie database. Please wait...')
                     self.ui_wizard.progressBar.setValue(self.value)
@@ -61,7 +61,7 @@ class DBWizard(QtGui.QWizard):
                 self.button(self.FinishButton).setEnabled(True)
                 self.ui_wizard.progressBar.setValue(100)
                 self.ui_wizard.label_3.setText('Database successfully created!')
-                self.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+                self.setCursor(QtWidgets.QCursor(QtCore.Qt.ArrowCursor))
             else:
                 self.show_info_message("Database could not be created.\nPlease check again your input file format.")
 
@@ -71,7 +71,7 @@ class DBWizard(QtGui.QWizard):
 
     def open_sequence_file(self):
         """Open a sequence file and return the path."""
-        sequence_file_location = QtGui.QFileDialog.getOpenFileName(
+        sequence_file_location = QtWidgets.QFileDialog.getOpenFileName(
                         self,
                         u"Open a sequence file",
                         self.home_location,
@@ -82,7 +82,7 @@ class DBWizard(QtGui.QWizard):
                 self.ui_wizard.label_5.setText(file_path)
 
     def show_info_message(self, message):
-        QtGui.QMessageBox.information(self,
+        QtWidgets.QMessageBox.information(self,
                     u"Information",
                     message
                     )
