@@ -19,7 +19,7 @@ Attribution-NonCommercial-ShareAlike 2.0 Generic (CC BY-NC-SA 2.0) License
 ### requirements
 - Anaconda
 - bowtie
-- FASTA file to check against (Ensembl cDNA)
+- FASTA file to check against (Ensembl cDNA for example)
 
 ### Installation
 ```
@@ -27,6 +27,9 @@ conda create --name sifi python=3.9
 conda activate sifi
 conda install --yes --file requirements.txt
 ```
+
+### Running
+`python main.py`
 
 # We have received many requests to save the siRNA sequences, and we understand the importance of this feature
 Unfortunately, this function has not been implemented, and si-Fi is currently not updated due to the need for a complete rewrite to meet current Python standards and library versions. 
