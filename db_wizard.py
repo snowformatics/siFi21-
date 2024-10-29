@@ -1,6 +1,6 @@
 import os
 import threads
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from Resources.ui_db_wizard import Ui_wizard
 
 
@@ -27,6 +27,7 @@ class DBWizard(QtWidgets.QWizard):
 
         if self.currentId() == 2:
             sequence_file_location = self.ui_wizard.label_5.text()
+            print(f"sequence file 2: {sequence_file_location}")
             db_name = self.ui_wizard.lineEdit.text()
             # Replace spaces, otherwise it makes problems with windows paths
             db_name = db_name.replace(' ', '_')
@@ -37,7 +38,7 @@ class DBWizard(QtWidgets.QWizard):
                     self.value = 0
                     self.button(self.FinishButton).setEnabled(False)
                     self.ui_wizard.progressBar.setValue(self.value)
-                    self.setCursor(QtWidgets.QCursor(QtCore.Qt.WaitCursor))
+                    self.setCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
                     # Start Bowtie thread
                     self.ui_wizard.label_3.setText('Creating Bowtie database. Please wait...')
                     self.ui_wizard.progressBar.setValue(self.value)
@@ -48,7 +49,8 @@ class DBWizard(QtWidgets.QWizard):
                                                                 str(self.bowtie_location)
                                                                 )
 
-                    self.connect(self.BowtieDBThread, QtCore.SIGNAL("threadDone(QString, QString)"), self.thread_done)
+                    # self.connect(self.BowtieDBThread, QtCore.SIGNAL("threadDone(QString, QString)"), self.thread_done)
+                    self.BowtieDBThread.finished.connect(self.thread_done)
                     self.BowtieDBThread.start()
                     self.BowtieDBThread.wait()
 
@@ -61,7 +63,7 @@ class DBWizard(QtWidgets.QWizard):
                 self.button(self.FinishButton).setEnabled(True)
                 self.ui_wizard.progressBar.setValue(100)
                 self.ui_wizard.label_3.setText('Database successfully created!')
-                self.setCursor(QtWidgets.QCursor(QtCore.Qt.ArrowCursor))
+                self.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
             else:
                 self.show_info_message("Database could not be created.\nPlease check again your input file format.")
 
@@ -74,9 +76,9 @@ class DBWizard(QtWidgets.QWizard):
         sequence_file_location = QtWidgets.QFileDialog.getOpenFileName(
                         self,
                         u"Open a sequence file",
-                        self.home_location,
-                        u"Sequence (*.fasta *.fas *.txt)")
-        if not sequence_file_location.isNull():
+                        str(self.home_location),
+                        u"Sequence (*.fasta *.fas *.txt *.fa)")[0]
+        if sequence_file_location:
             if os.path.exists(sequence_file_location):
                 file_path = str(sequence_file_location)
                 self.ui_wizard.label_5.setText(file_path)

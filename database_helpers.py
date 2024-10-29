@@ -35,10 +35,10 @@ def get_size_date_of_file(db_file):
 def create_bowtie_database(db_name, database_file_location, db_location, bowtie_location):
     """Creates a Bowtie DB."""
 
-    assert type(database_file_location) is StringType
-    assert type(db_name) is StringType
-    assert type(db_location) is StringType
-    assert type(bowtie_location) is StringType
+    assert type(database_file_location) is str
+    assert type(db_name) is str
+    assert type(db_location) is str
+    assert type(bowtie_location) is str
 
     os.chdir(bowtie_location)
     process = subprocess.Popen(["bowtie-build", database_file_location, db_location + str(db_name)])
