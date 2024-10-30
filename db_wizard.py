@@ -67,7 +67,11 @@ class DBWizard(QtWidgets.QWizard):
             else:
                 self.show_info_message("Database could not be created.\nPlease check again your input file format.")
 
-    def thread_done(self, info_message, bowtie_file_path):
+    # def thread_done(self, info_message, bowtie_file_path):
+    #     """Show message after thread has finished."""
+    #     self.mainWindow.available_databases()
+
+    def thread_done(self):
         """Show message after thread has finished."""
         self.mainWindow.available_databases()
 

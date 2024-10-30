@@ -17,5 +17,7 @@ class CreateDBThread(QtCore.QThread):
                                                                             self.database_file_location,
                                                                             self.db_location,
                                                                             self.bowtie_location)
-        self.finished.connect(print(f"{info_message[0]}, Bowtie ok"))
+        print("info message:")
+        print(info_message[0])
+        # self.finished.connect(print(f"{info_message[0]}, Bowtie ok"))
         # self.emit(QtCore.SIGNAL("threadDone(QString, QString)"), info_message[0], 'Bowtie ok')

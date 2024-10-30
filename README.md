@@ -19,6 +19,7 @@ Attribution-NonCommercial-ShareAlike 2.0 Generic (CC BY-NC-SA 2.0) License
 ### requirements
 - Anaconda
 - bowtie
+- ViennaRNA
 - FASTA file to check against (Ensembl cDNA for example)
 - QT5
 
@@ -28,6 +29,11 @@ conda create --name sifi python=3.9
 conda activate sifi
 conda install --yes --file requirements.txt
 mkdir ~/sifi
+mkdir ~/sifi/siFi2015
+mkdir ~/sifi/siFi2015/Databases
+mv <fasta_file> ~/sifi/siFi2015/Databases
+cd ~/sifi/siFi2015/Databases
+bowtie-build <fasta_file> <out_prefix>
 ```
 
 ### Running

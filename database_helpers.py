@@ -12,7 +12,7 @@ def all_dbs(db_location):
     all_databases = os.listdir(db_location)
     database_dict = {'Database name': [], 'Database size (MB)': [], 'Created': []}
     for db_file in all_databases:
-        file_date, file_size = get_size_date_of_file(db_location + db_file)
+        file_date, file_size = get_size_date_of_file(str(Path(db_location) / db_file))
         #print file_date, file_size
         if db_file.endswith('.ebwt'):
             if db_file.split('.')[0] not in database_dict['Database name']:
@@ -62,13 +62,14 @@ def delete_databases(db_list, db_location):
     for db in db_list:
         try:
             for extension in bowtie_endings:
-                os.remove(db_location + str(db) + extension)
-                if not os.path.exists(db_location + str(db) + extension):
+                remove_file = db_location / f"{db}{extension}"
+                remove_file.unlink()
+                if not remove_file.is_file():
                     bowtie_was_deleted = True
                 else:
                     bowtie_was_deleted = False
             
-        except (IOError, OSError, WindowsError):
+        except (IOError, OSError):
             pass
     
     if bowtie_was_deleted:

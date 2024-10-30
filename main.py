@@ -307,11 +307,11 @@ class MyMainWindow(QtWidgets.QMainWindow):
         sequence_file_location = QtWidgets.QFileDialog.getOpenFileName(
                                     self,
                                     u"Open a sequence file",
-                                    self.home_location,
+                                    str(self.home_location),
                                     file_format)
-        if not sequence_file_location.isNull():
-            if os.path.exists(sequence_file_location):
-                return str(sequence_file_location)
+        if sequence_file_location[0]:
+            if os.path.exists(sequence_file_location[0]):
+                return str(sequence_file_location[0])
 
     def default_settings(self):
         """Sets default settings."""

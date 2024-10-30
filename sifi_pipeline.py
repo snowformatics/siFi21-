@@ -330,7 +330,7 @@ class SifiPipeline(object):
         temp_bowtie_file = tempfile.mkstemp()
         os.chdir(self.bowtie_location)
         process = subprocess.Popen(["bowtie", "-a", "-v", str(mismatches),  "-y",
-                                    self.db_location + database_name, "-f",
+                                    self.db_location / database_name, "-f",
                                     sequence, temp_bowtie_file[1]])
         process.wait()
 
