@@ -106,6 +106,7 @@ class MyMainWindow(QtWidgets.QMainWindow):
         self.ui.actionDocumentation.triggered.connect(self.show_help)
         self.ui.actionAbout.triggered.connect(self.show_about_message)
         self.ui.pushButton_openDB.clicked.connect(self.open_file_and_insert_seq)
+        self.ui.comboBox_miss.currentIndexChanged.connect(self.test)
         # self.connect(self.ui.comboBox_miss, QtCore.SIGNAL("currentIndexChanged(const QString&)"), self.test)
 
     def test(self):

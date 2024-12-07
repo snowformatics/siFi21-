@@ -249,7 +249,7 @@ class SifiPipeline(object):
 
             # print sirna_name, sirna_sequence_n2, sirna_sequence, query_position
 
-                lunp_data_xmer = lunp_data[int(sirna_name.split('sirna')[1])-1, :].astype(np.float).tolist()[self.accessibility_window]
+                lunp_data_xmer = lunp_data[int(sirna_name.split('sirna')[1])-1, :].astype(float).tolist()[self.accessibility_window]
 
                 is_efficient, strand_selection, end_stability, target_site_accessibility, thermo_effcicient = self.calculate_efficiency(sirna_sequence, sirna_sequence_n2, lunp_data_xmer)
 
@@ -349,8 +349,8 @@ class SifiPipeline(object):
         cwd = tempfile.mkdtemp()
         prc_stdout = subprocess.PIPE
         prc = subprocess.Popen(['RNAplfold', '-W', '%d'%self.winsize,'-L', '%d'% self.span, '-u', '%d'%self.sirna_size, '-T', '%.2f'%self.temperature], stdin=subprocess.PIPE, stdout=prc_stdout, cwd=cwd)
-        prc.stdin.write(seq)
-        prc.stdin.write('\n')
+        prc.stdin.write(seq.encode())
+        prc.stdin.write('\n'.encode())
         prc.communicate()
 
         if os.path.exists(cwd + '/' + query_name + '_lunp'):

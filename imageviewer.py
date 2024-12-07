@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui, QtPrintSupport
 from PIL import Image
 import shutil
 import os
 import general_helpers
+
+from pathlib import Path
 
 
 class ImageViewer(QtWidgets.QMainWindow):
@@ -14,14 +16,14 @@ class ImageViewer(QtWidgets.QMainWindow):
     def __init__(self, parent, fileName, mode, table_data, main_target_dict, off_target_dict, seq_file):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.parent = parent
-        self.printer = QtWidgets.QPrinter()
+        self.printer = QtPrintSupport.QPrinter()
 
         self.scaleFactor = 0.0
         self.scale = 0.75
         offset = 50
 
         self.mode = mode
-        self.home_location = str(QtWidgets.QDesktopServices.storageLocation(QtWidgets.QDesktopServices.HomeLocation))
+        self.home_location = Path().home() / "sifi" / "home"
         self.image_file = fileName
         self.table_data = table_data
         self.main_target_dict = main_target_dict

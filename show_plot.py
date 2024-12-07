@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui, QtPrintSupport
 from matplotlib.backends.backend_qt5agg \
     import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg \
@@ -16,6 +16,8 @@ import seaborn as sns
 from collections import Counter
 import shutil
 import os
+
+from pathlib import Path
 
 
 class NavigationToolbar(NavigationToolbar2QT):
@@ -44,7 +46,7 @@ class DrawPlot(QtWidgets.QMainWindow):
         self.main_targets = main_targets
         self.f_in = f_in
         self.mode = mode
-        self.home_location = str(QtWidgets.QDesktopServices.storageLocation(QtWidgets.QDesktopServices.HomeLocation))
+        self.home_location = Path().home() / "sifi" / "home"
         self.table_data = table_data
 
         if self.mode == 0:
@@ -55,7 +57,7 @@ class DrawPlot(QtWidgets.QMainWindow):
         # Image tempfile
         self.temp_img_file = tempfile.mkstemp()
 
-        self.printer = QtWidgets.QPrinter()
+        self.printer = QtPrintSupport.QPrinter()
         # Single query mode, get all data
         query = list(general_helpers.iterparse(self.sifi_data))[0]
         # Get number of hits per query

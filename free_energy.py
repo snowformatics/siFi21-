@@ -355,7 +355,7 @@ def calculate_free_energy(seq, check=True, strict=True, c_seq=None, shift=0, nn_
     deltaS += nn_table['init'][dS]
 
     # Type: Duplex with no (allA/T) or at least one (oneG/C) GC pair
-    if SeqUtils.GC(seq) == 0:
+    if SeqUtils.gc_fraction(seq) == 0:
         deltaH += nn_table['init_allA/T'][dH]
         deltaS += nn_table['init_allA/T'][dS]
     else:
