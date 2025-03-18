@@ -3,6 +3,7 @@ siFi: Software for long double-stranded RNAi-target design and off-target predic
 Version v1.2.3-0008
 
 Software Download: [http://www.snowformatics.com/si-fi.html](https://sourceforge.net/projects/sifi21/files/sifi1.2.3-0008.exe/download)
+
 Manual: https://github.com/snowformatics/siFi21-/blob/7ef3e82003883156ecfa2cc73c5d36e93e02f9c2/Quick_help.pdf
 
 Reference: 
